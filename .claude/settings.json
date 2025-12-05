@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/on-stop.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledMcpjsonServers": ["playwright"],
+  "enableAllProjectMcpServers": true
+}
