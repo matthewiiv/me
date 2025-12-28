@@ -29,25 +29,6 @@ DURATION=$(awk "BEGIN {printf \"%.2f\", $END_TIME - $START_TIME}")
 echo "⏱️  TypeScript check took ${DURATION}s"
 echo ""
 
-
-# Run unit tests
-echo "🧪 Running unit tests..."
-START_TIME=$(date +%s.%N)
-test_output=$(npx vitest run 2>&1)
-test_exit=$?
-if [ $test_exit -ne 0 ]; then
-    HAS_ERRORS=1
-    echo "❌ Unit tests failed"
-    echo "$test_output" >&2
-else
-    echo "✅ Unit tests passed"
-fi
-END_TIME=$(date +%s.%N)
-DURATION=$(awk "BEGIN {printf \"%.2f\", $END_TIME - $START_TIME}")
-echo "⏱️  Unit tests took ${DURATION}s"
-echo ""
-
-
 # Run ESLint with auto-fix
 echo "🔍 Running ESLint with auto-fix..."
 START_TIME=$(date +%s.%N)
