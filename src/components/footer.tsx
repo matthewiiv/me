@@ -1,51 +1,16 @@
-import { Github, Linkedin, Twitter, Mail } from "lucide-react";
-import { EMAIL } from "@/constants";
-
-const socialLinks = [
-  {
-    href: "https://github.com/matthewiiv",
-    label: "GitHub",
-    icon: Github
-  },
-  {
-    href: "https://www.linkedin.com/in/matthewiiv/",
-    label: "LinkedIn",
-    icon: Linkedin
-  },
-  {
-    href: "https://x.com/matthewsharp3",
-    label: "Twitter",
-    icon: Twitter
-  },
-  {
-    href: `mailto:${EMAIL}`,
-    label: "Email",
-    icon: Mail
-  }
-];
+import { NAME } from "@/constants";
 
 /**
- * Footer with social links
+ * Footer: name line above the closing hazard-stripe band
  */
 export function Footer() {
   return (
-    <footer className="border-t border-border/40 py-8">
-      <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-4">
-        <div className="flex gap-4">
-          {socialLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-              aria-label={link.label}
-            >
-              <link.icon className="h-5 w-5" />
-            </a>
-          ))}
-        </div>
+    <footer className="border-t-2 border-ink">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] sm:px-10">
+        <span data-testid="text-footer-name">{NAME}</span>
+        <span data-testid="text-footer-year">© {new Date().getFullYear()}</span>
       </div>
+      <div className="stripes h-5 sm:h-7" aria-hidden="true" />
     </footer>
   );
 }

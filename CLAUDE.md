@@ -810,11 +810,15 @@ docker-compose down  # Stop Redis when done
 
 ## UI/Design Preferences
 
-- **Default theme**: Light mode
-- **Primary accent**: Pink/Red (#EB3D63)
-- **Font stack**: Inter for UI, JetBrains Mono for code
-- Fully responsive design with Radix UI + shadcn/ui components
-- Dynamic dark/light mode with smooth transitions
+Personal site design ("quiet livery", chosen Sep 2026 from a set of design-canvas directions):
+
+- **Default theme**: Light. Dark mode inverts paper and ink via the `.dark` class and keeps the highlight
+- **Palette tokens** (`src/index.css`): `paper` (white), `ink` (near-black), one `hi` highlight (racing yellow #ffd60a), plus muted variants. shadcn variables map onto these so the existing `Button` still works
+- **Font stack**: Bricolage Grotesque (display, uppercase, tight tracking) and Space Grotesk (body), loaded from Google Fonts in `index.html`
+- **Motifs**: 2px ink rules, hazard-stripe bands (`.stripes` utility), pill "stickers" in the hero, flat colour project tiles with a hard offset shadow on hover
+- **Experience** is a lap chart: bars positioned by real tenure from year/month data, the current role runs to today. On phones the bars go label-less and the list beneath carries the detail
+- **Name**: always "Matthew Sharp", never "Matt"
+- Fully responsive, layout handled in CSS (Tailwind breakpoints), no JS measurement
 
 ## Common Development Workflows
 

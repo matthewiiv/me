@@ -4,15 +4,18 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Bricolage Grotesque", "Arial Black", Impact, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+  --color-paper: var(--paper);
+  --color-paper-muted: var(--paper-muted);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-hi: var(--hi);
+  --color-on-hi: var(--on-hi);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -31,90 +34,45 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Light theme */
+/*
+ * Livery palette. Light is the default: white paper, near-black ink and one
+ * racing-yellow highlight. Dark inverts paper and ink and keeps the highlight.
+ */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(0.985 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.55 0.24 290);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0.01 290);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.93 0.03 290);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0 0);
-  --input: oklch(0.9 0 0);
-  --ring: oklch(0.55 0.24 290);
-  --chart-1: oklch(0.55 0.24 290);
-  --chart-2: oklch(0.6 0.2 330);
-  --chart-3: oklch(0.65 0.18 250);
-  --chart-4: oklch(0.7 0.16 200);
-  --chart-5: oklch(0.75 0.14 150);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.55 0.24 290);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.93 0.03 290);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.9 0 0);
-  --sidebar-ring: oklch(0.55 0.24 290);
+  --radius: 0.25rem;
+  --paper: #ffffff;
+  --paper-muted: #f2f2f2;
+  --ink: #0a0a0a;
+  --ink-muted: #555555;
+  --hi: #ffd60a;
+  --on-hi: #0a0a0a;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--hi);
+  --secondary: var(--paper-muted);
+  --secondary-foreground: var(--ink);
+  --muted: var(--paper-muted);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--paper-muted);
+  --accent-foreground: var(--ink);
+  --destructive: #e63b2e;
+  --border: var(--ink);
+  --input: var(--ink);
+  --ring: var(--hi);
 }
 
-/* Dark theme (default) */
 .dark {
-  --background: oklch(0.12 0.02 290);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.16 0.02 290);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.16 0.02 290);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.7 0.2 290);
-  --primary-foreground: oklch(0.12 0.02 290);
-  --secondary: oklch(0.22 0.03 290);
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.22 0.02 290);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.25 0.04 290);
-  --accent-foreground: oklch(0.95 0 0);
-  --destructive: oklch(0.65 0.2 25);
-  --border: oklch(0.25 0.02 290);
-  --input: oklch(0.25 0.02 290);
-  --ring: oklch(0.7 0.2 290);
-  --chart-1: oklch(0.7 0.2 290);
-  --chart-2: oklch(0.65 0.18 330);
-  --chart-3: oklch(0.6 0.16 250);
-  --chart-4: oklch(0.7 0.14 200);
-  --chart-5: oklch(0.75 0.12 150);
-  --sidebar: oklch(0.14 0.02 290);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.7 0.2 290);
-  --sidebar-primary-foreground: oklch(0.12 0.02 290);
-  --sidebar-accent: oklch(0.22 0.03 290);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.25 0.02 290);
-  --sidebar-ring: oklch(0.7 0.2 290);
+  --paper: #0a0a0a;
+  --paper-muted: #161616;
+  --ink: #ffffff;
+  --ink-muted: #a3a3a3;
 }
 
 @layer base {
@@ -127,26 +85,19 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
   }
+}
 
-  /* Scrollbar styling */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+@layer utilities {
+  /* Hazard stripes used as section bands. */
+  .stripes {
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--ink) 0 14px,
+      var(--hi) 14px 28px
+    );
   }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--muted);
-    border-radius: 5px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--muted-foreground);
-  }
-
-  /* Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--muted) transparent;
+  /* Dashed year gridline in the experience lap chart. */
+  .yr {
+    border-left: 2px dashed color-mix(in srgb, var(--ink) 30%, transparent);
   }
 }
