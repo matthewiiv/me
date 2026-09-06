@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 import { EMAIL, NAME } from "@/constants";
 
 interface YearMonth {
@@ -124,6 +124,8 @@ const roles: Role[] = [
 
 /**
  * Number of months from the start of the chart to the given year and month
+ * @param yearMonth - Calendar year and 1-based month
+ * @returns Months elapsed since January of the chart's first year
  */
 function monthsFromChartStart({ year, month }: YearMonth): number {
   return (year - FIRST_YEAR) * MONTHS_PER_YEAR + (month - 1);
@@ -131,6 +133,8 @@ function monthsFromChartStart({ year, month }: YearMonth): number {
 
 /**
  * Human-readable label for a year and month, e.g. "Sep 2025"
+ * @param yearMonth - Calendar year and 1-based month
+ * @returns Abbreviated month name followed by the year
  */
 function formatYearMonth({ year, month }: YearMonth): string {
   return `${MONTH_NAMES[month - 1]} ${year}`;
@@ -138,6 +142,8 @@ function formatYearMonth({ year, month }: YearMonth): string {
 
 /**
  * Formats a role's tenure as "Sep 2022 → Sep 2025" or "Sep 2025 → now"
+ * @param role - The role whose start and optional end dates are formatted
+ * @returns The formatted period string
  */
 function formatPeriod(role: Role): string {
   const end = role.end ? formatYearMonth(role.end) : "now";
@@ -156,10 +162,15 @@ const projectBadgeToneClasses: Record<Project["tone"], string> = {
   retired: "border-ink-muted"
 };
 
+interface ProjectTileProps {
+  project: Project;
+}
+
 /**
  * Project tile; renders as a link when the project has a URL
+ * @param props - The project to display
  */
-function ProjectTile({ project }: { project: Project }) {
+function ProjectTile({ project }: ProjectTileProps) {
   const className = cn(
     "flex min-h-[200px] flex-col justify-between gap-8 border-2 border-ink p-5 sm:min-h-[260px] sm:p-7",
     projectToneClasses[project.tone],
@@ -169,25 +180,25 @@ function ProjectTile({ project }: { project: Project }) {
   const content = (
     <>
       <div className="flex items-start justify-between gap-4">
-        <span
-          className="font-display text-3xl font-extrabold uppercase leading-[0.95] tracking-[-0.03em] lg:text-[44px]"
-          data-testid={`text-project-title-${project.title}`}
+        <h3
+          className="m-0 font-display text-3xl font-extrabold uppercase leading-[0.95] tracking-[-0.03em] lg:text-[44px]"
+          data-testid={`text-project-title-${slugify(project.title)}`}
         >
           {project.title}
-        </span>
+        </h3>
         <span
           className={cn(
             "shrink-0 border-2 px-2 py-1 text-[11px] font-bold uppercase tracking-[0.06em] sm:text-[13px]",
             projectBadgeToneClasses[project.tone]
           )}
-          data-testid={`text-project-badge-${project.title}`}
+          data-testid={`text-project-badge-${slugify(project.title)}`}
         >
           {project.badge}
         </span>
       </div>
       <p
         className="text-[15px] leading-snug sm:text-[17px]"
-        data-testid={`text-project-description-${project.title}`}
+        data-testid={`text-project-description-${slugify(project.title)}`}
       >
         {project.description}
       </p>
@@ -201,14 +212,17 @@ function ProjectTile({ project }: { project: Project }) {
         target="_blank"
         rel="noopener noreferrer"
         className={className}
-        data-testid={`link-project-${project.title}`}
+        data-testid={`link-project-${slugify(project.title)}`}
       >
         {content}
       </a>
     );
   }
   return (
-    <div className={className} data-testid={`card-project-${project.title}`}>
+    <div
+      className={className}
+      data-testid={`card-project-${slugify(project.title)}`}
+    >
       {content}
     </div>
   );
@@ -216,6 +230,7 @@ function ProjectTile({ project }: { project: Project }) {
 
 /**
  * Experience as a lap chart: one bar per role, positioned by real tenure
+ * @returns The chart element with year gridlines and one bar per role
  */
 function LapChart() {
   const now = new Date();
@@ -282,7 +297,7 @@ function LapChart() {
           <div
             key={role.company}
             className="relative h-7 sm:h-[60px]"
-            data-testid={`bar-role-${role.company}`}
+            data-testid={`bar-role-${slugify(role.company)}`}
           >
             <div
               className={cn(
@@ -296,7 +311,7 @@ function LapChart() {
             />
             <div
               className={cn(
-                "pointer-events-none absolute top-0 hidden h-full flex-col justify-center whitespace-nowrap px-3 md:flex",
+                "pointer-events-none absolute top-0 hidden h-full flex-col justify-center overflow-hidden whitespace-nowrap px-3 md:flex",
                 labelOutside
                   ? "text-ink"
                   : isCurrent
@@ -305,16 +320,19 @@ function LapChart() {
               )}
               style={
                 labelOutside
-                  ? { left: `${left + width}%` }
-                  : { left: `${left}%`, width: `${width}%`, overflow: "hidden" }
+                  ? {
+                      left: `${left + width}%`,
+                      maxWidth: `${100 - left - width}%`
+                    }
+                  : { left: `${left}%`, width: `${width}%` }
               }
             >
-              <span className="font-display text-base font-extrabold leading-tight tracking-[-0.01em]">
+              <span className="truncate font-display text-base font-extrabold leading-tight tracking-[-0.01em]">
                 {role.company}
               </span>
               <span
                 className={cn(
-                  "hidden text-[11px] font-bold uppercase tracking-[0.06em] lg:block",
+                  "hidden truncate text-[11px] font-bold uppercase tracking-[0.06em] lg:block",
                   labelOutside ? "text-ink-muted" : "opacity-80"
                 )}
               >
@@ -330,6 +348,7 @@ function LapChart() {
 
 /**
  * Home page: hero, bio, projects, and experience
+ * @returns The page content
  */
 export function HomePage() {
   return (
@@ -355,7 +374,7 @@ export function HomePage() {
                 "inline-flex h-9 items-center rounded-full border-[3px] border-ink px-3.5 text-[13px] font-bold uppercase tracking-[0.04em] sm:h-10 sm:px-4 sm:text-[15px]",
                 sticker.highlight ? "bg-hi text-on-hi" : "bg-paper text-ink"
               )}
-              data-testid={`text-sticker-${sticker.label}`}
+              data-testid={`text-sticker-${slugify(sticker.label)}`}
             >
               {sticker.label}
             </li>
@@ -370,7 +389,7 @@ export function HomePage() {
         <div className="border-b-2 border-ink md:col-span-4 md:border-b-0 md:border-r-2">
           <img
             src="/me.png"
-            alt={NAME}
+            alt={`Portrait of ${NAME}`}
             width={512}
             height={512}
             className="aspect-[4/3] h-full w-full object-cover object-[center_20%] grayscale md:aspect-auto md:min-h-[320px]"
@@ -387,7 +406,7 @@ export function HomePage() {
           </p>
           <a
             href={`mailto:${EMAIL}`}
-            className="inline-flex h-14 items-center justify-between gap-3 bg-ink px-5 font-display text-base font-extrabold uppercase text-hi transition-colors hover:bg-ink/90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-hi sm:h-[60px] sm:self-start sm:px-7 sm:text-[22px]"
+            className="inline-flex h-14 items-center justify-between gap-3 bg-primary px-5 font-display text-base font-extrabold uppercase text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ink sm:h-[60px] sm:self-start sm:px-7 sm:text-[22px]"
             data-testid="link-email-cta"
           >
             <span>{EMAIL}</span>
@@ -440,22 +459,26 @@ export function HomePage() {
             <li
               key={role.company}
               className="flex flex-col gap-1 text-[15px] leading-snug md:grid md:grid-cols-[150px_1fr] md:gap-3"
-              data-testid={`row-role-${role.company}`}
+              data-testid={`row-role-${slugify(role.company)}`}
             >
               <span
                 className={cn(
                   "text-[11px] font-bold uppercase tracking-[0.06em] md:pt-0.5 md:text-xs",
-                  !role.end && "text-hi brightness-75 dark:brightness-100"
+                  !role.end && "text-hi-text"
                 )}
-                data-testid={`text-role-period-${role.company}`}
+                data-testid={`text-role-period-${slugify(role.company)}`}
               >
                 {formatPeriod(role)}
               </span>
               <span>
-                <strong data-testid={`text-role-title-${role.company}`}>
+                <strong
+                  data-testid={`text-role-title-${slugify(role.company)}`}
+                >
                   {role.title}, {role.company}.
                 </strong>{" "}
-                <span data-testid={`text-role-description-${role.company}`}>
+                <span
+                  data-testid={`text-role-description-${slugify(role.company)}`}
+                >
                   {role.description}
                 </span>
               </span>

@@ -1,5 +1,6 @@
 import { ThemeToggle } from "@/components/theme-toggle";
 import { EMAIL, NAME, SOCIAL_LINKS } from "@/constants";
+import { slugify } from "@/lib/utils";
 
 /**
  * Site header: name, social links, theme toggle, and the hazard-stripe band
@@ -22,7 +23,7 @@ export function Nav() {
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline hover:decoration-hi hover:decoration-[3px] hover:underline-offset-4"
-              data-testid={`link-${link.label.toLowerCase()}`}
+              data-testid={`link-${slugify(link.label)}`}
             >
               {link.label}
             </a>

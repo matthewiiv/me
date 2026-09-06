@@ -15,6 +15,7 @@
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
   --color-hi: var(--hi);
+  --color-hi-text: var(--hi-text);
   --color-on-hi: var(--on-hi);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -47,6 +48,7 @@
   --ink: #0a0a0a;
   --ink-muted: #555555;
   --hi: #ffd60a;
+  --hi-text: #6b5a00;
   --on-hi: #0a0a0a;
   --background: var(--paper);
   --foreground: var(--ink);
@@ -73,6 +75,9 @@
   --paper-muted: #161616;
   --ink: #ffffff;
   --ink-muted: #a3a3a3;
+  --hi-text: #ffd60a;
+  --primary: var(--hi);
+  --primary-foreground: var(--on-hi);
 }
 
 @layer base {
