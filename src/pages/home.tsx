@@ -42,6 +42,13 @@ interface Project {
 
 const projects: Project[] = [
   {
+    title: "Cardsetting",
+    description:
+      "Describe your business card in a sentence and get print-ready files back. Five automated print checks before you ever see a design.",
+    tech: ["AI", "Print"],
+    url: "https://cardsetting.com"
+  },
+  {
     title: "Transcribe My Notes",
     description:
       "Thousands of voice notes transcribed across 56 languages. Forward WhatsApp messages, get text back in seconds.",
