@@ -28,7 +28,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         ? "dark"
         : "light";
     }
-    return "dark";
+    return "light";
   });
 
   useEffect(() => {

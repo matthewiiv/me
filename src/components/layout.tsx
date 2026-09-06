@@ -13,15 +13,13 @@ export function Layout({ children }: LayoutProps) {
     <div className="flex min-h-screen flex-col">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+        data-testid="link-skip-to-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
       >
         Skip to content
       </a>
       <Nav />
-      <main
-        id="main-content"
-        className="mx-auto w-full max-w-3xl flex-1 px-4 py-8"
-      >
+      <main id="main-content" className="mx-auto w-full max-w-7xl flex-1">
         {children}
       </main>
       <Footer />
